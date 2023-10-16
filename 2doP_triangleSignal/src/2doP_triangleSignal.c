@@ -53,7 +53,7 @@ int main(void) {
 
 void configPin(){
 
-	LPC_PINCON-> PINSEL1  |= (2 << 20); //P0.26 configured like AOUT.
+	LPC_PINCON-> PINSEL1  |= (2 << 20); //P0.26 configured as AOUT.
 	LPC_PINCON-> PINMODE1 |= (2 << 20); //neither pull down nor pull up.
 	LPC_PINCON-> PINMODE_OD0 &= ~(1 << 20); //Hasn't configured open drain option.
 
