@@ -25,21 +25,21 @@ void configTIMER0(void);
 void configDAC(void);
 void configDMA(void);
 
+uint16_t valores[2048];
+
 int main(void) {
 
 	configPin();
 	configTIMER0();
 	configDAC();
 
-	uint16_t valores[2048];
-
 	for(uint16_t i=0; i < 1025; i++){
-		valores.add[i];
+		valores[i]= i;
 	}
 
 	for(uint16_t j=1024; j=0; j--){
 		for(uint16_t k= 1025; k < 2049; k++){
-			valores.add[k]= j;
+			valores[k]= (uint16_t)j;
 		}
 
 	}
@@ -59,7 +59,7 @@ void configPin(){
 
 }
 
-void configTimer0(){
+void configTIMER0(){
 
 	LPC_SC-> PCONP |= (1 << 1);
 	LPC_SC-> PCLKSEL0 |= (1 << 2);
