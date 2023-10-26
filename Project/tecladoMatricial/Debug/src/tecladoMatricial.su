@@ -1,0 +1,7 @@
+C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\inc/core_cm3.h:928:22:NVIC_EnableIRQ	16	static
+C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\inc/core_cm3.h:1012:22:NVIC_SetPriority	16	static
+../src/tecladoMatricial.c:45:5:main	8	static
+../src/tecladoMatricial.c:57:6:configPin	24	static
+../src/tecladoMatricial.c:76:6:configGPIO	8	static
+../src/tecladoMatricial.c:97:6:EINT3_IRQHandler	8	static
+../src/tecladoMatricial.c:112:6:delay	24	static
