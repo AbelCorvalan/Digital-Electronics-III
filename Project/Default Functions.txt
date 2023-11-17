@@ -1,0 +1,8 @@
+Default Functions which are common in some modules.
+
+void configPin(void);
+void configPin(){}
+
+
+void configGPIO(void);
+void configGPIO(){}
