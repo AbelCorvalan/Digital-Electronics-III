@@ -1,0 +1,13 @@
+C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\inc/core_cm3.h:928:22:NVIC_EnableIRQ	16	static
+C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\inc/core_cm3.h:941:22:NVIC_DisableIRQ	16	static
+C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\inc/core_cm3.h:1012:22:NVIC_SetPriority	16	static
+../src/ADCStepperMotor_Project.c:69:5:main	8	static
+../src/ADCStepperMotor_Project.c:85:6:ADC_LDR	8	static
+../src/ADCStepperMotor_Project.c:111:6:ADC_IRQHandler	16	static
+../src/ADCStepperMotor_Project.c:150:6:configPin	16	static
+../src/ADCStepperMotor_Project.c:173:6:configGPIO	8	static
+../src/ADCStepperMotor_Project.c:182:6:enableTIM0	8	static
+../src/ADCStepperMotor_Project.c:192:6:configADC	8	static
+../src/ADCStepperMotor_Project.c:205:6:configTIMER0	32	static
+../src/ADCStepperMotor_Project.c:239:6:configTIMER1	32	static
+../src/ADCStepperMotor_Project.c:258:6:TIMER0_IRQHandler	8	static
