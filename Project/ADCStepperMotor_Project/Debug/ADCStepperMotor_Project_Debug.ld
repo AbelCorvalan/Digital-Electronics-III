@@ -5,7 +5,7 @@
  * Generated linker script file for LPC1769
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v11.8.0 [Build 1165] [2023-07-26] on Nov 19, 2023, 7:12:22 PM
+ * MCUXpresso IDE v11.8.0 [Build 1165] [2023-07-26] on Nov 20, 2023, 8:48:49 PM
  */
 
 INCLUDE "ADCStepperMotor_Project_Debug_library.ld"

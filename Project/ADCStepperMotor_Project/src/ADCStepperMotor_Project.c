@@ -12,7 +12,7 @@
 /*------------------------------------------------ DEFINES ------------------------------------------------------------------*/
 //ADC Converter//
 #define PRESCALE_VALUE_TIM1  (uint32_t)		1000000
-#define MATCH0_TIM1 		 (uint32_t)		5
+#define MATCH0_TIM1 		 (uint32_t)		2
 #define REFERENCE_VALUE_LDR	 (uint32_t)		2055
 
 //TIMER0 y MATCH0//
@@ -23,14 +23,14 @@
 
 //Prescaler and Match to Timer0 Values.
 #define PRESCALE_VALUE_TIM0  (uint32_t)		2000	  //TIMER0 Prescaler Value in [ms]. (Prescaler configured to 2000ms)
-#define MATCH0_TIM0		 	 (uint32_t)		3		  //Match0 Value (MATCH0_TIM0=1). Determines the parameter velocity
+#define MATCH0_TIM0		 	 (uint32_t)		5		  //Match0 Value (MATCH0_TIM0=1/10). Determines the parameter velocity
 #define PORT_ZERO            (uint32_t)     0		  //PORT0 define.
 
 
 
 
-#define fullTurn  (uint16_t) 200	//Steps numbers: (360°/1.8°)= 200 steps
-
+#define fullTurn       (uint16_t) 200	//Steps numbers: (360°/1.8°)= 200 steps
+#define fullEnrollment (uint16_t) 800
 /*----------------------------------------------- END DEFINES ---------------------------------------------------------------*/
 /*------------------------------------------------ VARIABLES ----------------------------------------------------------------*/
 //Motor Variables
@@ -51,7 +51,13 @@ uint16_t limFinal   = 150;	 // Valor final del rango de movimiento de la cortina
 
 
 //ADC Converter Variables//
-volatile uint16_t ADC0Value = 0; 	//Variable auxiliar para observar el valor del registro de captura.
+//volatile uint16_t ADC0Value = 0; 	//Variable auxiliar para observar el valor del registro de captura.
+//uint16_t ADC0Value = 0;
+volatile float ADC0Value = 0;
+//Steps
+uint16_t lapsC= 600;	//600
+float volt=0;
+//volatile float volt1= 0;
 /*---------------------------------------------- FIN DEFINE TIMER -----------------------------------------------------------*/
 /*----------------------------------------------- FUNCTIONS -----------------------------------------------------------------*/
 void configPin(void);
@@ -63,22 +69,26 @@ void enableTIM0(void);
 void configTIMER1(void);
 void configADC(void);
 void ADC_LDR(void);
-void ADC_IRQHandler(void);
+//void ADC_IRQHandler(void);
+
+void disableTIM1(void);
+void enableTIM0(void);
+void delay(uint32_t);
+
 /*---------------------------------------------- END FUNCTIONS --------------------------------------------------------------*/
 
 int main(void) {
 
 	configPin();
 	configGPIO();
-	configTIMER0();
-
 	configADC();
 	configTIMER1();
+	//configTIMER1();
 	ADC_LDR();
 
     while(1) {
     }
-    return 1;
+    return 0 ;
 }
 
 /* Función que habilita/deshabilita conversion ADC */
@@ -112,11 +122,11 @@ void ADC_IRQHandler(void){
 
 	// 	Codigo extraido de clase con adaptacion a este proyecto.
 
-	float volt = 0;
+	//float volt= 0;
 
 	ADC0Value = (ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_0) & 0xFFF); 	 //12 bit Mask to extract result.
-	volt = (ADC0Value / 4096) * 3.3;
-
+	volt = ((float)ADC0Value / 4095.0) * 3.3;
+	lapsC= fullEnrollment*(volt/3.3);
 	// La idea es aprovechar la luz del dia.
 	if (0 <= volt && volt <  0.825) {
 		//Discrete_Up();							// Deberia subir toda la cortina
@@ -141,26 +151,32 @@ void ADC_IRQHandler(void){
 	else if (ADC0Value < REFERENCE_VALUE_LDR) {
 		//Discrete_Up();
 	}
-
+	configTIMER0();
 	enableTIM0();
+	//Desactivo TIM1
+	TIM_DeInit(LPC_TIM1);
+	//NVIC_SetPriority(TIMER0_IRQn, 1);
+	NVIC_DisableIRQ(TIMER1_IRQn);
+	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, DISABLE);
+	NVIC_DisableIRQ(ADC_IRQn);
 
+	//enableTIM0();
+
+	return;
+}
+
+void enableTIM0(void){
+
+	TIM_ResetCounter(LPC_TIM0);
+	TIM_Cmd(LPC_TIM0, ENABLE);
+	NVIC_EnableIRQ(TIMER0_IRQn);
 	return;
 }
 
 void configPin(void){
 
-	//Stepper Motor pins.
 	PINSEL_CFG_Type Pin;
-	Pin.Funcnum = PINSEL_FUNC_0;
-	Pin.Portnum = PINSEL_PORT_0;
-	//Pin.Pinmode = PINSEL_PINMODE_PULLUP;
-	Pin.OpenDrain = PINSEL_PINMODE_NORMAL;
-	Pin.Pinnum =  PINSEL_PIN_21;
-	Pin.Pinnum =  PINSEL_PIN_3;
-	PINSEL_ConfigPin(&Pin);
 
-
-	//ADC Converter pins.
 	Pin.Funcnum = PINSEL_FUNC_1;						// P0.23 como ADC Channel 0.
 	Pin.Portnum = PINSEL_PORT_0;
 	Pin.Pinnum = PINSEL_PIN_23;
@@ -168,6 +184,16 @@ void configPin(void){
 	Pin.OpenDrain = PINSEL_PINMODE_NORMAL;
 	PINSEL_ConfigPin(&Pin);
 	return;
+
+	//Stepper Motor pins.
+		//PINSEL_CFG_Type Pin;
+		Pin.Funcnum = PINSEL_FUNC_0;
+		Pin.Portnum = PINSEL_PORT_0;
+		//Pin.Pinmode = PINSEL_PINMODE_PULLUP;
+		Pin.OpenDrain = PINSEL_PINMODE_NORMAL;
+		Pin.Pinnum =  PINSEL_PIN_21;
+		Pin.Pinnum =  PINSEL_PIN_3;
+		PINSEL_ConfigPin(&Pin);
 }
 
 void configGPIO(){
@@ -179,18 +205,10 @@ void configGPIO(){
 
 }
 
-void enableTIM0(void){
-	//Enable TIMER0.
-	TIM_ResetCounter(LPC_TIM0);
-	TIM_Cmd(LPC_TIM0, ENABLE);
-	NVIC_EnableIRQ(TIMER0_IRQn);
-	return;
-}
-
 /* Función que configura el ADC para dispararse mediante TIMER1
  * Realiza un conversion aproximadamente cada 10[s] */
 void configADC(void){
-	//ADC Converter configuration.
+
 	ADC_Init(LPC_ADC, 200000);							// Conversion a 200kHz
 	LPC_ADC->ADCR &= ~(1<<16);							// No burst
 	ADC_StartCmd(LPC_ADC, ADC_START_ON_MAT10);			// Conversion en MR0 del TIM1
@@ -198,39 +216,6 @@ void configADC(void){
 	ADC_IntConfig(LPC_ADC, ADC_ADINTEN0, ENABLE);		// Habilita interrupcion por ADC.
 	NVIC_SetPriority(ADC_IRQn, 4);
 	NVIC_EnableIRQ(ADC_IRQn);							// Interrupcion del NVIC para el ADC habilitada.
-	return;
-}
-
-
-void configTIMER0(void){
-
-  /*time before interruption: t = (1/PCLK)*(PC + 1)*(TC + 1).
-	 * Cuanto vale el CCLK?????????? Averiguar.
-	 * t = (1/(CCLK/x_div))*(PR + 1)*(MRx + 1). Where MRx = 0. If t = 2s, and CCLK = 120MHz(supongo),
-	 * So =>  PR = t*(CCLK/x_div) - 1    =>    PR = 2s*(120M/4) - 1 = 59999999
-	 * El '-1' está mal ya que luego en la funcion le resta nuevamente '-1'.
-	 * Luego,  PR = 60000000.*/
-
-	/* Timer para temporizar la secuencia de control del motor*/
-	TIM_TIMERCFG_Type TimerZERO;
-	TIM_MATCHCFG_Type MatchConfig;
-	//TIM_MATCHCFG_Type MatchZERO, MatchConfig;
-	TimerZERO.PrescaleOption = TIM_PRESCALE_USVAL;						// Prescaler de 1ms
-	TimerZERO.PrescaleValue = PRESCALE_VALUE_TIM0;
-
-	for (int MatchX = 0; MatchX < 4; MatchX++) {						// Carga MR0, MR1, MR3 y MR4
-		MatchConfig.MatchChannel = MatchX;
-		MatchConfig.MatchValue = MATCH0_TIM0; //+ (MatchX * MATCH0_TIM0 ); //Load MRx with 5mseg, 10mseg, 15mseg and 20mseg.
-		MatchConfig.IntOnMatch = ENABLE;
-		MatchConfig.ResetOnMatch = ENABLE;
-		MatchConfig.StopOnMatch = DISABLE;
-		MatchConfig.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
-		TIM_ConfigMatch(LPC_TIM0, &MatchConfig);
-	}
-
-	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerZERO);
-	NVIC_SetPriority(TIMER0_IRQn, 1);
-	NVIC_EnableIRQ(TIMER0_IRQn);				// Habilita interrupcion en NVIC
 	return;
 }
 
@@ -255,12 +240,48 @@ void configTIMER1(void){
 	return;
 }
 
+void configTIMER0(void){
+
+  /*time before interruption: t = (1/PCLK)*(PC + 1)*(TC + 1).
+	 * Cuanto vale el CCLK?????????? Averiguar.
+	 * t = (1/(CCLK/x_div))*(PR + 1)*(MRx + 1). Where MRx = 0. If t = 2s, and CCLK = 120MHz(supongo),
+	 * So =>  PR = t*(CCLK/x_div) - 1    =>    PR = 2s*(120M/4) - 1 = 59999999
+	 * El '-1' está mal ya que luego en la funcion le resta nuevamente '-1'.
+	 * Luego,  PR = 60000000.*/
+
+	/* Timer para temporizar la secuencia de control del motor*/
+	TIM_TIMERCFG_Type TimerZERO;
+	TIM_MATCHCFG_Type MatchConfig;
+	//TIM_MATCHCFG_Type MatchZERO, MatchConfig;
+	TimerZERO.PrescaleOption = TIM_PRESCALE_USVAL;						// Prescaler de 1ms
+	TimerZERO.PrescaleValue = PRESCALE_VALUE_TIM0;
+
+	//for (int MatchX = 0; MatchX < 4; MatchX++) {						// Carga MR0, MR1, MR3 y MR4
+		MatchConfig.MatchChannel = 0;
+		MatchConfig.MatchValue = MATCH0_TIM0; //+ (MatchX * MATCH0_TIM0 ); //Load MRx with 5mseg, 10mseg, 15mseg and 20mseg.
+		MatchConfig.IntOnMatch = ENABLE;
+		MatchConfig.ResetOnMatch = ENABLE;
+		MatchConfig.StopOnMatch = DISABLE;
+		MatchConfig.ExtMatchOutputType = TIM_EXTMATCH_NOTHING;
+		TIM_ConfigMatch(LPC_TIM0, &MatchConfig);
+	//}
+
+	TIM_Init(LPC_TIM0, TIM_TIMER_MODE, &TimerZERO);
+	NVIC_SetPriority(TIMER0_IRQn, 1);
+	NVIC_EnableIRQ(TIMER0_IRQn);				// Habilita interrupcion en NVIC
+	return;
+}
+
 void TIMER0_IRQHandler(void){
 
 	//fullTurn.
-	//if(stepsDone == fullTurn){
-	//	TIM_DeInit(LPC_TIM0);
-	//} else {
+	//if(stepsDone == lapsC){
+	if(stepsDone == lapsC){
+		stepsDone=0;
+		TIM_DeInit(LPC_TIM0);
+		//NVIC_SetPriority(TIMER0_IRQn, 1);
+		NVIC_DisableIRQ(TIMER0_IRQn);
+	} else {
 		if(TIM_GetIntStatus(LPC_TIM0, TIM_MR0_INT)){
 			GPIO_ClearValue(PORT_ZERO, DIR);
 			GPIO_SetValue(PORT_ZERO, STEP);
@@ -268,8 +289,17 @@ void TIMER0_IRQHandler(void){
 		}
 		GPIO_ClearValue(PORT_ZERO, STEP);
 		stepsDone++;
-	//}
+	}
 
 	return;
+
+}
+
+void delay(uint32_t times){
+
+	for(uint32_t i=0; i < times; i++){
+		for(uint32_t i=0; i < times; i++){
+		}
+	}
 
 }
