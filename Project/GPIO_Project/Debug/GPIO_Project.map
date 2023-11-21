@@ -213,7 +213,7 @@ END GROUP
                 0x20084000                __top_RamAHB32 = 0x20084000
                 0x20084000                __top_RAM2 = 0x20084000
 
-.text           0x00000000      0x6fc
+.text           0x00000000      0x764
  FILL mask 0xff
                 0x00000000                __vectors_start__ = ABSOLUTE (.)
  *(.isr_vector)
@@ -222,10 +222,10 @@ END GROUP
                 0x000000cc                . = ALIGN (0x4)
                 0x000000cc                __section_table_start = .
                 0x000000cc                __data_section_table = .
-                0x000000cc        0x4 LONG 0x6fc LOADADDR (.data)
+                0x000000cc        0x4 LONG 0x764 LOADADDR (.data)
                 0x000000d0        0x4 LONG 0x10000000 ADDR (.data)
                 0x000000d4        0x4 LONG 0x0 SIZEOF (.data)
-                0x000000d8        0x4 LONG 0x6fc LOADADDR (.data_RAM2)
+                0x000000d8        0x4 LONG 0x764 LOADADDR (.data_RAM2)
                 0x000000dc        0x4 LONG 0x2007c000 ADDR (.data_RAM2)
                 0x000000e0        0x4 LONG 0x0 SIZEOF (.data_RAM2)
                 0x000000e4                __data_section_table_end = .
@@ -302,76 +302,75 @@ END GROUP
  .text.main     0x00000384       0x10 ./src/GPIO_Project.o
                 0x00000384                main
  .text.configPin
-                0x00000394       0x3a ./src/GPIO_Project.o
+                0x00000394       0x4c ./src/GPIO_Project.o
                 0x00000394                configPin
  .text.configGPIO
-                0x000003ce       0x48 ./src/GPIO_Project.o
-                0x000003ce                configGPIO
- *fill*         0x00000416        0x2 ff
+                0x000003e0       0x48 ./src/GPIO_Project.o
+                0x000003e0                configGPIO
  .text.EINT3_IRQHandler
-                0x00000418       0x84 ./src/GPIO_Project.o
-                0x00000418                EINT3_IRQHandler
- .text.delay    0x0000049c       0x3c ./src/GPIO_Project.o
-                0x0000049c                delay
+                0x00000428       0xdc ./src/GPIO_Project.o
+                0x00000428                EINT3_IRQHandler
+ .text.delay    0x00000504       0x3c ./src/GPIO_Project.o
+                0x00000504                delay
  .text.SystemInit
-                0x000004d8       0xd8 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(system_LPC17xx.o)
-                0x000004d8                SystemInit
+                0x00000540       0xd8 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(system_LPC17xx.o)
+                0x00000540                SystemInit
  .text.GPIO_GetPointer
-                0x000005b0       0x12 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+                0x00000618       0x12 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
  .text.GPIO_SetDir
-                0x000005c2       0x18 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
-                0x000005c2                GPIO_SetDir
+                0x0000062a       0x18 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+                0x0000062a                GPIO_SetDir
  .text.GPIO_SetValue
-                0x000005da        0xc C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
-                0x000005da                GPIO_SetValue
- *fill*         0x000005e6        0x2 ff
+                0x00000642        0xc C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+                0x00000642                GPIO_SetValue
+ *fill*         0x0000064e        0x2 ff
  .text.GPIO_IntCmd
-                0x000005e8       0x38 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
-                0x000005e8                GPIO_IntCmd
+                0x00000650       0x38 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+                0x00000650                GPIO_IntCmd
  .text.GPIO_GetIntStatus
-                0x00000620       0x40 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
-                0x00000620                GPIO_GetIntStatus
+                0x00000688       0x40 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+                0x00000688                GPIO_GetIntStatus
  .text.GPIO_ClearInt
-                0x00000660       0x1c C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
-                0x00000660                GPIO_ClearInt
+                0x000006c8       0x1c C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+                0x000006c8                GPIO_ClearInt
  .text.PINSEL_ConfigPin
-                0x0000067c       0x7c C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_pinsel.o)
-                0x0000067c                PINSEL_ConfigPin
+                0x000006e4       0x7c C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_pinsel.o)
+                0x000006e4                PINSEL_ConfigPin
  .text.__weak_main
-                0x000006f8        0x4 c:/nxp/mcuxpressoide_11.8.0_1165/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.8.0.202306131047/tools/bin/../lib/gcc/arm-none-eabi/12.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libcr_c.a(__weak__main.o)
-                0x000006f8                __weak_main
-                0x000006f8                __main
+                0x00000760        0x4 c:/nxp/mcuxpressoide_11.8.0_1165/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.8.0.202306131047/tools/bin/../lib/gcc/arm-none-eabi/12.2.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libcr_c.a(__weak__main.o)
+                0x00000760                __weak_main
+                0x00000760                __main
  *(.rodata .rodata.* .constdata .constdata.*)
-                0x000006fc                . = ALIGN (0x4)
+                0x00000764                . = ALIGN (0x4)
 
-.glue_7         0x000006fc        0x0
- .glue_7        0x000006fc        0x0 linker stubs
+.glue_7         0x00000764        0x0
+ .glue_7        0x00000764        0x0 linker stubs
 
-.glue_7t        0x000006fc        0x0
- .glue_7t       0x000006fc        0x0 linker stubs
+.glue_7t        0x00000764        0x0
+ .glue_7t       0x00000764        0x0 linker stubs
 
-.vfp11_veneer   0x000006fc        0x0
- .vfp11_veneer  0x000006fc        0x0 linker stubs
+.vfp11_veneer   0x00000764        0x0
+ .vfp11_veneer  0x00000764        0x0 linker stubs
 
-.v4_bx          0x000006fc        0x0
- .v4_bx         0x000006fc        0x0 linker stubs
+.v4_bx          0x00000764        0x0
+ .v4_bx         0x00000764        0x0 linker stubs
 
-.iplt           0x000006fc        0x0
- .iplt          0x000006fc        0x0 ./src/GPIO_Project.o
+.iplt           0x00000764        0x0
+ .iplt          0x00000764        0x0 ./src/GPIO_Project.o
 
-.rel.dyn        0x000006fc        0x0
- .rel.iplt      0x000006fc        0x0 ./src/GPIO_Project.o
+.rel.dyn        0x00000764        0x0
+ .rel.iplt      0x00000764        0x0 ./src/GPIO_Project.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM.exidx      0x000006fc        0x0
-                0x000006fc                __exidx_start = .
+.ARM.exidx      0x00000764        0x0
+                0x00000764                __exidx_start = .
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x000006fc                __exidx_end = .
-                0x000006fc                _etext = .
+                0x00000764                __exidx_end = .
+                0x00000764                _etext = .
 
-.data_RAM2      0x2007c000        0x0 load address 0x000006fc
+.data_RAM2      0x2007c000        0x0 load address 0x00000764
  FILL mask 0xff
                 [!provide]                PROVIDE (__start_data_RAM2 = .)
                 [!provide]                PROVIDE (__start_data_RamAHB32 = .)
@@ -392,7 +391,7 @@ END GROUP
                 0x10000000                . = ALIGN (0x4)
                 0x10000000                _end_uninit_RESERVED = .
 
-.data           0x10000000        0x0 load address 0x000006fc
+.data           0x10000000        0x0 load address 0x00000764
  FILL mask 0xff
                 0x10000000                _data = .
                 [!provide]                PROVIDE (__start_data_RAM = .)
@@ -408,7 +407,7 @@ END GROUP
                 [!provide]                PROVIDE (__end_data_RAM = .)
                 [!provide]                PROVIDE (__end_data_RamLoc32 = .)
 
-.igot.plt       0x10000000        0x0 load address 0x000006fc
+.igot.plt       0x10000000        0x0 load address 0x00000764
  .igot.plt      0x10000000        0x0 ./src/GPIO_Project.o
 
 .bss_RAM2       0x2007c000        0x0
@@ -458,18 +457,18 @@ END GROUP
                 0x10008000                PROVIDE (_vStackTop = DEFINED (__user_stack_top)?__user_stack_top:(__top_RamLoc32 - 0x0))
                 0xefff749e                PROVIDE (__valid_user_code_checksum = (0x0 - ((((((_vStackTop + (ResetISR + 0x1)) + (NMI_Handler + 0x1)) + (HardFault_Handler + 0x1)) + (DEFINED (MemManage_Handler)?MemManage_Handler:0x0 + 0x1)) + (DEFINED (BusFault_Handler)?BusFault_Handler:0x0 + 0x1)) + (DEFINED (UsageFault_Handler)?UsageFault_Handler:0x0 + 0x1))))
                 0x00000000                _image_start = LOADADDR (.text)
-                0x000006fc                _image_end = (LOADADDR (.data) + SIZEOF (.data))
-                0x000006fc                _image_size = (_image_end - _image_start)
+                0x00000764                _image_end = (LOADADDR (.data) + SIZEOF (.data))
+                0x00000764                _image_size = (_image_end - _image_start)
 OUTPUT(GPIO_Project.axf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000     0x22ca
- .debug_info    0x00000000      0x938 ./src/GPIO_Project.o
- .debug_info    0x00000938      0x278 ./src/cr_startup_lpc175x_6x.o
- .debug_info    0x00000bb0       0x41 ./src/crp.o
- .debug_info    0x00000bf1      0x302 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(system_LPC17xx.o)
- .debug_info    0x00000ef3      0xebf C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
- .debug_info    0x00001db2      0x518 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_pinsel.o)
+.debug_info     0x00000000     0x22e0
+ .debug_info    0x00000000      0x94e ./src/GPIO_Project.o
+ .debug_info    0x0000094e      0x278 ./src/cr_startup_lpc175x_6x.o
+ .debug_info    0x00000bc6       0x41 ./src/crp.o
+ .debug_info    0x00000c07      0x302 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(system_LPC17xx.o)
+ .debug_info    0x00000f09      0xebf C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+ .debug_info    0x00001dc8      0x518 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_pinsel.o)
 
 .debug_abbrev   0x00000000      0x9e3
  .debug_abbrev  0x00000000      0x298 ./src/GPIO_Project.o
@@ -530,13 +529,13 @@ LOAD linker stubs
  .debug_macro   0x00002c2f       0xd7 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
  .debug_macro   0x00002d06       0x8d C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_pinsel.o)
 
-.debug_line     0x00000000     0x1630
- .debug_line    0x00000000      0x3f9 ./src/GPIO_Project.o
- .debug_line    0x000003f9      0x162 ./src/cr_startup_lpc175x_6x.o
- .debug_line    0x0000055b       0xb1 ./src/crp.o
- .debug_line    0x0000060c      0x40a C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(system_LPC17xx.o)
- .debug_line    0x00000a16      0x888 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
- .debug_line    0x0000129e      0x392 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_pinsel.o)
+.debug_line     0x00000000     0x166e
+ .debug_line    0x00000000      0x437 ./src/GPIO_Project.o
+ .debug_line    0x00000437      0x162 ./src/cr_startup_lpc175x_6x.o
+ .debug_line    0x00000599       0xb1 ./src/crp.o
+ .debug_line    0x0000064a      0x40a C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(system_LPC17xx.o)
+ .debug_line    0x00000a54      0x888 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_gpio.o)
+ .debug_line    0x000012dc      0x392 C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug\libCMSISv2p00_LPC17xx.a(lpc17xx_pinsel.o)
 
 .debug_str      0x00000000     0xa106
  .debug_str     0x00000000     0x92b8 ./src/GPIO_Project.o
