@@ -41,7 +41,7 @@ main-build: GPIO_Project.axf
 GPIO_Project.axf: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -L"C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug" -Xlinker -Map="GPIO_Project.map" -Xlinker --cref -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m3 -mthumb -T "GPIO_Project_Debug.ld" -o "GPIO_Project.axf" $(OBJS) $(USER_OBJS) $(LIBS) -lCMSISv2p00_LPC17xx
+	arm-none-eabi-gcc -nostdlib -L"C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx\Debug" -Xlinker -Map="GPIO_Project.map" -Xlinker --cref -Xlinker --gc-sections -Xlinker -print-memory-usage -mcpu=cortex-m3 -mthumb -T GPIO_Project_Debug.ld -o "GPIO_Project.axf" $(OBJS) $(USER_OBJS) $(LIBS) -lCMSISv2p00_LPC17xx
 	@echo 'Finished building target: $@'
 	@echo ' '
 
