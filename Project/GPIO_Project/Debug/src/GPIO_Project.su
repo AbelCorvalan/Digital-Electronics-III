@@ -4,4 +4,4 @@ C:\Users\abeel\Documents\MCUXpressoIDE_11.8.0_1165\workspace2\CMSISv2p00_LPC17xx
 ../src/GPIO_Project.c:47:6:configPin	16	static
 ../src/GPIO_Project.c:67:6:configGPIO	8	static
 ../src/GPIO_Project.c:84:6:EINT3_IRQHandler	8	static
-../src/GPIO_Project.c:99:6:delay	24	static
+../src/GPIO_Project.c:101:6:delay	24	static

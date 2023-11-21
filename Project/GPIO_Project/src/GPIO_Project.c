@@ -82,17 +82,19 @@ void configGPIO(){
 }
 
 void EINT3_IRQHandler(){
-
+	delay(6000);//antirebote
 	//GPIO_ClearValue(1, (1 << 22));
-	LPC_GPIO0-> FIOCLR |= (1 << 22);
-	delay(1000);
-	LPC_GPIO0-> FIOSET |= (1 << 22);
-	delay(1000);
-	LPC_GPIO0-> FIOCLR |= (1 << 22);
-	delay(1000);
-	LPC_GPIO0-> FIOSET |= (1 << 22);
-    delay(1000);
-
+	GPIO_ClearInt(2, 0x00000001);
+	if(GPIO_GetIntStatus(2, 0, 0)==0){
+		LPC_GPIO0-> FIOCLR |= (1 << 22);
+		delay(1000);
+		LPC_GPIO0-> FIOSET |= (1 << 22);
+		delay(1000);
+		LPC_GPIO0-> FIOCLR |= (1 << 22);
+		delay(1000);
+		LPC_GPIO0-> FIOSET |= (1 << 22);
+		delay(1000);
+	}
     GPIO_ClearInt(2, 0x00000001);
 }
 
