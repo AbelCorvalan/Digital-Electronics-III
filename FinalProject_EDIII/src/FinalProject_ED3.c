@@ -212,10 +212,10 @@ void ADC_IRQHandler(void) {
 	// La idea es aprovechar la luz del dia.
 if(seteo==0){
 	if (0 <= volt && volt < 0.825 ) {
-		lapsC= fullEnrollment*(volt/3.3);				// Deberia subir toda la cortina
-		state = 0;
+		lapsC = fullEnrollment;					// Deberia subir toda la cortina
+	        state = 0;
 	} else if (0.825 <= volt && volt < 1.65 ) {
-		lapsC= fullEnrollment*(volt/3.3);			// Deberia desenrollar la cortina
+		lapsC = fullEnrollment;			// Deberia desenrollar la cortina
 		state = 1;
 	}
 } else {
