@@ -2,7 +2,7 @@
  ===============================================================================
  Name        : Trabajo Final Electrónica Digital III.c
  Authors     :	Corvalán, Abel
- 	 	 	 	Mangin, Matías
+ 	 	Mangin, Matías
  Version     : 1.0
  Description :	Cortina Automática
  ===============================================================================
